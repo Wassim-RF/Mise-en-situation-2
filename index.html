@@ -5,11 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mise en situation 2</title>
 </head>
-<body>
-    <input type="text" id="question">
-    <input type="text" id="answer">
-    <button id="add_card">Add Card</button>
-    <div id="list"></div>
+<body style="display: flex; flex-direction: row; justify-items: center; align-items: center; height: 100vh; margin: 0; overflow: hidden;">
+    <div style="display: flex; flex-direction: column; justify-items: center; align-items: center; gap: 10px; background-color: blue; width: 100%; height: 100%;">
+        <input type="text" id="question" style="width: 35%; height: 25px; border-radius: 10px; margin-top: 300px; padding-left: 10px;"  placeholder="question">
+        <input type="text" id="answer" style="width: 35%; height: 25px; border-radius: 10px; padding-left: 10px;" placeholder="answer">
+        <button id="add_card" style="width: 20%; height: 25px; border-radius: 10px;">Add Card</button>
+    </div>
+    <div id="list" style="height: 100%; width: 100%; background-color: purple; color: white;"></div>
 </body>
 <script>
     const question_input = document.getElementById("question");
@@ -18,13 +20,17 @@
 
     add_card.addEventListener("click" , () => {
         const list_div = document.getElementById("list");
+        if (question_input.value === "" || answer_input.value === "") {
+            alert("La question ou la reponse est vide");
+            return;
+        }
         let flashcards = JSON.parse(localStorage.getItem("flashcards_test"))  || [];
         flashcards.push({
             question: question_input.value,
             answer: answer_input.value
         });
         localStorage.setItem("flashcards_test" , JSON.stringify(flashcards));
-        list_div.innerHTML = `
+        list_div.innerHTML += `
             <div>
                 <p>Q : ${question_input.value}</p>
                 <p>A : ${answer_input.value}</p>
