@@ -3,9 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Mise en situation 2</title>
 </head>
 <body>
-    
+    <input type="text" id="question">
+    <input type="text" id="answer">
+    <button id="add_card">Add Card</button>
+    <div id="list"></div>
 </body>
+<script>
+    const question_input = document.getElementById("question");
+    const answer_input = document.getElementById("answer");
+    const add_card = document.getElementById("add_card");
+
+    add_card.addEventListener("click" , () => {
+        const list_div = document.getElementById("list");
+        let flashcards = JSON.parse(localStorage.getItem("flashcards_test"))  || [];
+        flashcards.push({
+            question: question_input.value,
+            answer: answer_input.value
+        });
+        localStorage.setItem("flashcards_test" , JSON.stringify(flashcards));
+        list_div.innerHTML = `
+            <div>
+                <p>Q : ${question_input.value}</p>
+                <p>A : ${answer_input.value}</p>
+                <hr>
+            <div>
+        `
+        question_input.value = "";
+        answer_input.value = "";
+    })
+</script>
 </html>
